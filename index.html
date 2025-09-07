@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Adrijaa!</title>
+    <style>
+        * { box-sizing: border-box; }
+        html, body { height: 100%; margin: 0; }
+        :root { --accent: #ff6ec7; }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Segoe UI', Roboto, sans-serif;
+            color: #fff;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: radial-gradient(1200px 600px at 20% 20%, #1e293b 0%, #0b1220 50%, #060913 100%);
+        }
+
+        /* Halo effect */
+        .halo {
+            position: fixed;
+            inset: -30vmax;
+            pointer-events: none;
+            background: conic-gradient(from 0deg, #ff8bb3, #ffd166, #8bd3ff, #b88cff, #ff8bb3);
+            filter: blur(80px) saturate(120%);
+            animation: spin 18s linear infinite;
+            opacity: .25;
+            mix-blend-mode: screen;
+            z-index: 1;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Message card */
+        .wrap {
+            position: relative;
+            z-index: 3;
+            height: 100dvh;
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .card {
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.12);
+            backdrop-filter: blur(10px) saturate(120%);
+            border-radius: 24px;
+            padding: 2rem clamp(1.25rem, 2vw, 3rem);
+            max-width: 960px;
+            width: min(92vw, 960px);
+            box-shadow: 0 20px 60px rgba(0,0,0,.35);
+        }
+        h1 {
+            font-size: clamp(2.2rem, 7vw, 5rem);
+            margin: 0 0 .5rem;
+            text-shadow: 0 2px 20px rgba(0,0,0,.35);
+        }
+        .sub {
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            opacity: .9;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Button */
+        .btn {
+            padding: .85rem 1.1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,.3);
+            background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.06));
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform .12s ease, box-shadow .12s ease;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(0,0,0,.25); }
+
+        /* Balloons */
+        .balloon {
+            --h: 24vmin;
+            position: absolute;
+            bottom: -30vmin;
+            width: calc(var(--h) * .8);
+            height: var(--h);
+            background: radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.9), var(--c));
+            border-radius: 50% 50% 45% 55% / 60% 60% 40% 40%;
+            box-shadow: inset 0 -10px 24px rgba(0,0,0,.25);
+            animation: floatUp var(--t, 18s) linear infinite;
+            transform: translateX(-50%);
+        }
+        .balloon::after {
+            content: "";
+            position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%);
+            width: 14px; height: 12px;
+            background: var(--c);
+            border-radius: 2px 2px 6px 6px;
+        }
+        .string {
+            position: absolute; left: 50%; bottom: -32vmin; transform: translateX(-50%);
+            width: 2px; height: 32vmin;
+            background: linear-gradient(transparent, rgba(255,255,255,.35));
+        }
+        @keyframes floatUp {
+            0%   { transform: translate(-50%, 0) scale(1); opacity: 0; }
+            8%   { opacity: 1; }
+            100% { transform: translate(-50%, -130vh) scale(1.03); opacity: 1; }
+        }
+
+        /* Sparkles canvas */
+        canvas#sparkles { 
+            position: fixed; 
+            inset: 0; 
+            z-index: 2; 
+            pointer-events: none; 
+            mix-blend-mode: screen; 
+        }
+
+        /* Scroll Down Arrow */
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            z-index: 50;
+        }
+
+        .scroll-down span {
+            display: block;
+            width: 24px;
+            height: 24px;
+            border-bottom: 3px solid white;
+            border-right: 3px solid white;
+            transform: rotate(45deg);
+            margin: 0 auto;
+            animation: bounce 1.5s infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
+            40% { transform: rotate(45deg) translateY(8px); }
+            60% { transform: rotate(45deg) translateY(4px); }
+        }
+
+        .scroll-down:hover span {
+            opacity: 1;
+        }
+
+        /* Scroll Up Arrow */
+        .scroll-up {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            cursor: pointer;
+            display: none;
+            z-index: 50;
+        }
+
+        .scroll-up span {
+            display: block;
+            width: 24px;
+            height: 24px;
+            border-top: 3px solid white;
+            border-right: 3px solid white;
+            transform: rotate(-45deg);
+            opacity: 0.8;
+        }
+
+        .scroll-up:hover span {
+            opacity: 1;
+        }
+
+        /* Section for the letter */
+        #letter-section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #0b1220, #000);
+            overflow: hidden;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        #letter-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(255, 110, 199, 0.7);
+        }
+
+        /* Card with sideways opening */
+        .card-wrapper {
+            width: 320px;
+            height: 320px;
+            position: relative;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .card-cover, .card-inside {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 1.2s ease;
+            transform-origin: left center;
+        }
+
+        .card-cover {
+            background: linear-gradient(135deg, #ff6ec7, #ff8bb3);
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .card-cover:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 20%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.2) 0%, transparent 20%);
+            border-radius: 16px;
+        }
+
+        .card-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff8bb3, #ff6ec7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 4;
+            border: 3px solid rgba(255,255,255,0.7);
+        }
+
+        .card-seal:after {
+            content: '💌';
+            font-size: 24px;
+        }
+
+        .card-inside {
+            background: linear-gradient(135deg, #f9f9f9, #ffffff);
+            color: #333;
+            padding: 25px;
+            z-index: 1;
+            overflow-y: auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-inside h3 {
+            color: #ff6ec7;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            border-bottom: 2px dotted #ff6ec7;
+            padding-bottom: 8px;
+        }
+
+        .card-inside p {
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .card-instruction {
+            margin-top: 20px;
+            opacity: 0.8;
+            font-style: italic;
+            font-size: 1rem;
+        }
+
+        .signature {
+            margin-top: 15px;
+            font-style: italic;
+            color: #ff6ec7;
+            font-weight: bold;
+        }
+
+        .card-open .card-cover {
+            transform: rotateY(-180deg);
+        }
+
+        /* Empty space styling */
+        .empty-space {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 16px;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .card-open .empty-space {
+            opacity: 1;
+        }
+
+        /* Carousel styles - FIXED POSITIONING */
+        .carousel-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
+            height: 70vh;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-image {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px 0 0 12px;
+            margin-right: 15px;
+        }
+
+        .carousel-text {
+            flex: 1;
+            padding: 20px;
+            color: #333;
+            background: white;
+            border-radius: 0 12px 12px 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .carousel-text h3 {
+            color: #ff6ec7;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+        }
+
+        .carousel-text p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 11;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #ff6ec7;
+        }
+
+        .carousel-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6ec7;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 12;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Navigation buttons */
+        .carousel-prev, .carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 110, 199, 0.7);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 12;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .carousel-prev:hover, .carousel-next:hover {
+            background: rgba(255, 110, 199, 0.9);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: 15px;
+        }
+
+        .carousel-next {
+            right: 0px;
+        }
+
+        .view-memories-btn {
+            font-size: 18px;
+            padding: 8px 15px;
+            background: #ff6ec7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .view-memories-btn:hover {
+            background: #ff4da6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Music player styles */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 15px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ff6ec7;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            background: #ff4da6;
+            transform: scale(1.1);
+        }
+
+        .volume-control {
+            width: 80px;
+            height: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .volume-control::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ff6ec7;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .volume-control::-webkit-slider-thumb:hover {
+            background: #ff4da6;
+            transform: scale(1.2);
+        }
+
+        .music-label {
+            color: white;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-container {
+                width: 90%;
+                height: 60vh;
+            }
+            
+            .carousel {
+                flex-direction: column;
+            }
+
+            .carousel-image {
+                flex: 1;
+                margin-right: 0;
+                margin-bottom: 15px;
+                border-radius: 12px 12px 0 0;
+            }
+
+            .carousel-text {
+                flex: 1;
+                border-radius: 0 0 12px 12px;
+            }
+
+            .carousel-prev, .carousel-next {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .music-player {
+                bottom: 10px;
+                left: 10px;
+                padding: 8px 12px;
+            }
+
+            .music-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+
+            .volume-control {
+                width: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-wrapper {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .card-inside {
+                padding: 20px;
+            }
+            
+            .card-inside h3 {
+                font-size: 1.2rem;
+            }
+            
+            .card-inside p {
+                font-size: 0.85rem;
+            }
+
+            .carousel-container {
+                width: 95%;
+                height: 70vh;
+                padding: 15px;
+            }
+
+            .music-player {
+                flex-direction: column;
+                border-radius: 20px;
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .volume-control {
+                width: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Soft animated color halo -->
+    <div class="halo" aria-hidden="true"></div>
+
+    <!-- Decorative sparkles canvas -->
+    <canvas id="sparkles"></canvas>
+
+    <main class="wrap">
+        <section class="card">
+            <h1 id="title">🎉 Happy Birthday, Adrijaa! 🎂</h1>
+            <p class="sub">Enjoy the floating balloons and sparkling stars ✨<br><br> Click anywhere for music <br><br> Scroll For Surprise</p>
+            <button id="toggleBalloons" class="btn" aria-pressed="true">Hide Balloons</button>
+        </section>
+    </main>
+
+    <!-- Balloons injected here -->
+    <div id="balloonLayer" aria-hidden="true"></div>
+
+    <!-- Scroll Down Arrow -->
+    <div class="scroll-down">
+        <span></span>
+    </div>
+
+    <!-- Scroll Up Arrow -->
+    <div class="scroll-up">
+        <span></span>
+    </div>
+
+    <!-- Section for the letter -->
+    <section id="letter-section">
+        <h2>A Special Card For You</h2>
+        <div class="card-wrapper" id="cardWrapper">
+            <div class="card-cover">
+                <div class="card-seal"></div>
+            </div>
+            <div class="card-inside">
+                <h3>My Dearest Adrijaa,</h3>
+                <p>On this special day, I want to remind you how incredibly amazing you are. Your kindness, intelligence, and beautiful spirit light up every room you enter.</p>
+                <p class="signature">With all my love,<br>Someone who adores you ❤️</p>
+                <button class="view-memories-btn" id="showCarousel">View Memories</button>
+            </div>
+        </div>
+        <p class="card-instruction">Click on the card to open it!</p>
+    </section>
+
+    <!-- Carousel Container -->
+    <div class="carousel-container" id="carouselContainer">
+        <div class="carousel-close" id="carouselClose">✕</div>
+        <div class="carousel">
+            <div class="carousel-prev" id="carouselPrev">❮</div>
+            <div class="carousel-image" id="carouselImage"></div>
+            <div class="carousel-text" id="carouselText">
+                <h3 id="carouselTitle">Memory 1</h3>
+                <p id="carouselContent">This is where your memory description will appear. You can replace this with your own text.</p>
+            </div>
+            <div class="carousel-next" id="carouselNext">❯</div>
+        </div>
+        <div class="carousel-nav" id="carouselNav"></div>
+    </div>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <span class="music-label">Music:</span>
+        <button class="music-btn" id="playPauseBtn">▶</button>
+        <input type="range" class="volume-control" id="volumeControl" min="0" max="1" step="0.1" value="0.7">
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" loop>
+        <!-- Replace with your own music file -->
+        <source src="./assests/HAPPY BIRTHDAY INSTRUMENTAL.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rand = (min, max) => Math.random() * (max - min) + min;
+
+            // Elements
+            const sparkleCanvas = document.getElementById('sparkles');
+            const balloonLayer = document.getElementById('balloonLayer');
+            const toggleBalloonsBtn = document.getElementById('toggleBalloons');
+            const arrowDown = document.querySelector('.scroll-down');
+            const arrowUp = document.querySelector('.scroll-up');
+            const cardWrapper = document.getElementById('cardWrapper');
+            const showCarouselBtn = document.getElementById('showCarousel');
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const volumeControl = document.getElementById('volumeControl');
+
+            // Basic element checks
+            if (!sparkleCanvas) { console.error('Missing #sparkles canvas'); return; }
+            if (!balloonLayer) { console.error('Missing #balloonLayer'); return; }
+            if (!toggleBalloonsBtn) { console.error('Missing #toggleBalloons button'); return; }
+            if (!arrowDown || !arrowUp) { console.error('Missing scroll arrows (.scroll-down or .scroll-up)'); return; }
+            if (!cardWrapper) { console.error('Missing card wrapper'); return; }
+
+            // ==============================
+            // Music Player Functionality
+            // ==============================
+            // Set initial volume
+            backgroundMusic.volume = volumeControl.value;
+
+            // Play/Pause functionality
+            playPauseBtn.addEventListener('click', function() {
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play();
+                    playPauseBtn.textContent = '❚❚';
+                } else {
+                    backgroundMusic.pause();
+                    playPauseBtn.textContent = '▶';
+                }
+            });
+
+            // Volume control
+            volumeControl.addEventListener('input', function() {
+                backgroundMusic.volume = this.value;
+            });
+
+            // Auto-play music with user interaction
+            document.addEventListener('click', function initPlay() {
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play().catch(e => {
+                        console.log('Auto-play prevented:', e);
+                    });
+                    playPauseBtn.textContent = '❚❚';
+                }
+                document.removeEventListener('click', initPlay);
+            }, { once: true });
+
+            // ==============================
+            // Sparkles
+            // ==============================
+            const sCtx = sparkleCanvas.getContext('2d');
+            let sparkles = [];
+
+            function setupCanvas() {
+                const ratio = Math.min(window.devicePixelRatio || 1, 2);
+                sparkleCanvas.width = Math.floor(window.innerWidth * ratio);
+                sparkleCanvas.height = Math.floor(window.innerHeight * ratio);
+                sparkleCanvas.style.width = window.innerWidth + 'px';
+                sparkleCanvas.style.height = window.innerHeight + 'px';
+                sCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+            }
+
+            function initSparkles(count = 120) {
+                sparkles = Array.from({ length: count }, () => ({
+                    x: rand(0, window.innerWidth),
+                    y: rand(0, window.innerHeight),
+                    r: rand(0.6, 1.8),
+                    a: rand(0.25, 0.95),
+                    t: rand(0, Math.PI * 2)
+                }));
+            }
+
+            function drawSparkles() {
+                sCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                for (const p of sparkles) {
+                    p.t += 0.02;
+                    const pulse = (Math.sin(p.t * 2) + 1) / 2;
+                    const alpha = p.a * (0.5 + pulse * 0.5);
+                    sCtx.globalAlpha = alpha;
+
+                    const grad = sCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 6);
+                    grad.addColorStop(0, 'rgba(255,255,255,0.95)');
+                    grad.addColorStop(1, 'rgba(255,255,255,0)');
+                    sCtx.fillStyle = grad;
+
+                    sCtx.beginPath();
+                    sCtx.arc(p.x, p.y, p.r * 6, 0, Math.PI * 2);
+                    sCtx.fill();
+                }
+                sCtx.globalAlpha = 1;
+                requestAnimationFrame(drawSparkles);
+            }
+
+            setupCanvas();
+            initSparkles();
+            drawSparkles();
+            window.addEventListener('resize', () => {
+                setupCanvas();
+                initSparkles();
+            });
+
+            // ==============================
+            // Balloons
+            // ==============================
+            let balloonsOn = true;
+            let balloonTimer = null;
+
+            function spawnBalloon() {
+                if (!balloonsOn) return;
+                const b = document.createElement('div');
+                b.className = 'balloon';
+
+                const hue = Math.floor(rand(0, 360));
+                const color = `hsl(${hue} 85% 60%)`;
+                b.style.setProperty('--c', color);
+                b.style.setProperty('--t', `${rand(12, 22)}s`);
+                b.style.left = `${rand(5, 95)}vw`;
+                b.style.setProperty('--h', `${rand(16, 30)}vmin`);
+
+                const s = document.createElement('div');
+                s.className = 'string';
+                b.appendChild(s);
+
+                balloonLayer.appendChild(b);
+                setTimeout(() => b.remove(), 24000);
+            }
+
+            function startBalloons() {
+                if (!balloonTimer) balloonTimer = setInterval(spawnBalloon, 600);
+            }
+            function stopBalloons() {
+                if (balloonTimer) {
+                    clearInterval(balloonTimer);
+                    balloonTimer = null;
+                }
+            }
+
+            toggleBalloonsBtn.addEventListener('click', () => {
+                balloonsOn = !balloonsOn;
+                toggleBalloonsBtn.textContent = balloonsOn ? 'Hide Balloons' : 'Show Balloons';
+                if (balloonsOn) startBalloons();
+                else stopBalloons();
+            });
+
+            startBalloons();
+            for (let i = 0; i < 8; i++) setTimeout(spawnBalloon, i * 250);
+
+            // ==============================
+            // Scroll Arrows
+            // ==============================
+            arrowDown.addEventListener('click', () => {
+                window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+            });
+
+            arrowUp.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            window.addEventListener('scroll', () => {
+                arrowUp.style.display = window.scrollY > window.innerHeight / 2 ? 'block' : 'none';
+            });
+
+            // ==============================
+            // Card Interaction
+            // ==============================
+            cardWrapper.addEventListener('click', function() {
+                this.classList.toggle('card-open');
+                
+                // Change instruction text based on state
+                const instruction = document.querySelector('.card-instruction');
+                if (this.classList.contains('card-open')) {
+                    instruction.textContent = "Click again to close the card!";
+                } else {
+                    instruction.textContent = "Click on the card to open it!";
+                }
+            });
+
+            // ==============================
+            // Carousel Functionality
+            // ==============================
+            // Carousel data - replace with your own images and text
+            const carouselData = [
+                {
+                    image: "assests/9.jpg",
+                    title: "Pretty Flowers?",
+                    content: "Hey, Happy Birthday, I wish I could give those flowers myself, but this is the least I can do and I hope you like em hehehe.🎇🎆"
+                },
+                {
+                    image: "assests/2.jpg",
+                    title: "Mesmerizing Eyes....",
+                    content: "Just like your voice, you eyes are pretty too!! I often get lost but don't worry I make sure I find my way backkkkkk!"
+                },
+                {
+                    image: "assests/5.jpg",
+                    title: "Looks?",
+                    content: "Do looks even matter when you have such a warm personality, I say no. I hope we both stay to each other just like we are right now!"
+                },
+
+                {
+                    image: "assests/6.jpg",
+                    title: "Saree Shoots!",
+                    content: "I am fond of you getting excited over wearing sarees, Its amazing how you drape a fabric of cloth magical into this elegant and stunning look, you nail it, always!"
+                },
+
+                {
+                    image: "assests/8.jpg",
+                    title: "Spidormon",
+                    content: "Always the spidermon, huh? hehe. I am Batman, we can save the city together, but I know you will just end up doing silly stuff to me and wrap in yor webs 😶😶"
+                },
+
+                {
+                    image: "assests/1.jpg",
+                    title: "Oversharing?",
+                    content: "You think you can annoy me, c'mon, you can't and I love it when someone, especially you overshare with me, trust me it doesn't even count as oversharing, ❤❤"
+                },
+
+                {
+                    image: "assests/7.jpg",
+                    title: "Strangers To This!",
+                    content: "Its shocking how we met randomly on a discord server and starting to vibe and then to matching pfps and now to celebrating your birthday!💝"
+                },
+
+                {
+                    image: "assests/3.jpg",
+                    title: "Krishna Photoshoot?",
+                    content: "I don't know when you did this, but yeah its amazing, and queen of photoshoots huh? NICEEE!. Makhan Chorr."
+                },
+
+                {
+                    image: "assests/4.jpg",
+                    title: "Teacher or what?",
+                    content: "Your outstanding performance on Teacher's Day shocked me and you mentioned you never did anchoring so yeah its really outstanding. I hope happiness floods in your life like crezyyyy."
+                },
+
+                {
+                    image: "assests/11.jpg",
+                    title: "Gifts 😊",
+                    content: "Look I may haven't given you any gifts but Ma'am please consider me as your gift. I know I ghosted you and I still can't believe that even though you have such a beautiful life, you decided to make me a part of it, and I am thankful for that."
+                },
+
+                {
+                    image: "assests/10.jpg",
+                    title: "Cakey",
+                    content: "I wonder how hard it is to bake a cake for you? Maybe someday I will and I must, you deserve princess treatment whatsoever, as you make everything just bright. Hope your birthday is the best day, even if not, I hope this small token of love makes it, I hope it does, because you dserver every bit of it my boondi ka laddo."
+                },
+
+                {
+                    image: "assests/12.jpg",
+                    title: "Sunshine & Hopes",
+                    content: "Lastly, I hope the bond we have now, remains intangible and unbreakable forever. You really make my life more better and bearable, to know someone actually cares. I may not put up fancy stories on my Insta stories or even mention you but remember you will always end up in my prayers, you earned a spot not everyone gets to even know about. You gave my inner child a second chance, and I don't know how I can repay you, but for now I hope you you have a great day, ehehehehe, may you get all the love, happiness, care, affection and positivity you deserve. Byeyeyeyeey."
+                }
+            ];
+
+            // Carousel functionality
+            let currentCarouselIndex = 0;
+            const carouselContainer = document.getElementById('carouselContainer');
+            const carouselImage = document.getElementById('carouselImage');
+            const carouselTitle = document.getElementById('carouselTitle');
+            const carouselContent = document.getElementById('carouselContent');
+            const carouselNav = document.getElementById('carouselNav');
+            const carouselClose = document.getElementById('carouselClose');
+            const carouselPrev = document.getElementById('carouselPrev');
+            const carouselNext = document.getElementById('carouselNext');
+
+            // Initialize carousel navigation dots
+            function initCarousel() {
+                carouselNav.innerHTML = '';
+                carouselData.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+                    dot.addEventListener('click', () => showCarouselSlide(index));
+                    carouselNav.appendChild(dot);
+                });
+                showCarouselSlide(0);
+            }
+
+            // Show specific carousel slide
+            function showCarouselSlide(index) {
+                currentCarouselIndex = index;
+                const data = carouselData[index];
+                
+                carouselImage.style.backgroundImage = `url(${data.image})`;
+                carouselTitle.textContent = data.title;
+                carouselContent.textContent = data.content;
+                
+                // Update active dot
+                document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            }
+
+            // Navigate to next slide
+            function nextSlide() {
+                let nextIndex = currentCarouselIndex + 1;
+                if (nextIndex >= carouselData.length) {
+                    nextIndex = 0; // Loop back to first slide
+                }
+                showCarouselSlide(nextIndex);
+            }
+
+            // Navigate to previous slide
+            function prevSlide() {
+                let prevIndex = currentCarouselIndex - 1;
+                if (prevIndex < 0) {
+                    prevIndex = carouselData.length - 1; // Loop to last slide
+                }
+                showCarouselSlide(prevIndex);
+            }
+
+            // Add event listeners for carousel
+            showCarouselBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // Make sure the card is open first
+                if (!cardWrapper.classList.contains('card-open')) {
+                    cardWrapper.classList.add('card-open');
+                    document.querySelector('.card-instruction').textContent = "Click again to close the card!";
+                }
+                
+                // Show the carousel after a short delay to allow the card to open
+                setTimeout(() => {
+                    carouselContainer.style.display = 'block';
+                    initCarousel();
+                }, 600);
+            });
+
+            carouselClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                carouselContainer.style.display = 'none';
+            });
+
+            // Add event listeners for navigation buttons
+            carouselPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                prevSlide();
+            });
+
+            carouselNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                nextSlide();
+            });
+
+            // Prevent carousel click from closing the card
+            carouselContainer.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (carouselContainer.style.display === 'block') {
+                    if (e.key === 'ArrowLeft') {
+                        prevSlide();
+                    } else if (e.key === 'ArrowRight') {
+                        nextSlide();
+                    } else if (e.key === 'Escape') {
+                        carouselContainer.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
